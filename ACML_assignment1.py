@@ -1,3 +1,4 @@
+#Authors: Omendra Manhar i6131589, Jacob Salam i6184256
 import numpy
 import random
 import math
@@ -24,11 +25,8 @@ for x in range(8):
 		else:
 			temp.append(0)
 	inputs.append(temp)
-
-first_layer = []
-hidden_layer = []
-output_layer = []
-learning_rate = 0.95
+#The learning rate and decay parameter can be changed here.
+learning_rate = 0.9
 lambda_value = 0.0002
 weights_l1_l2 = []
 weights_l2_l3 = []
@@ -123,20 +121,28 @@ def gradient_descent(input, W1, W2, b1, b2):
     while(correct_count != len(input)):
             count = count + 1
             correct_count = 0
+            #The number of inputs to be learned on can be changed here by adapting input[:8] for example:
+            # first 3 and last 2: input[:3]+ input[6:8]
             W1, W2, b1, b2 = update_parameters(input[0:8], W1, W2, b1, b2)
             for i in input:
                             o, h = feedforward(i, W1, W2, b1, b2)
                             if i.index(max(i)) == o.index(max(o)):
                                 correct_count = correct_count +1
             if (count % 10000 == 0):
+                print(count)
                 for i in input:
                     o, h = feedforward(i, W1, W2, b1, b2)
                     print("Expected - ", i.index(max(i)), " Actual - ", o.index(max(o)))
-    print(count)
+    print("Convergence reached after",count, "iterations for a Learning rate of",learning_rate,"and a Lambda of", lambda_value)
+    for i in input:
+        o,h = feedforward(i, W1, W2, b1, b2)
+        output = [0 for i in range(8)]
+        output[o.index(max(o))] = 1
+        print("input",i,"  output", output)
+
+    
+    
 
 gradient_descent(inputs, weights_l1_l2, weights_l2_l3, b_l1, b_l2)
-print()
-print(b_l1, weights_l1_l2)
-print()
-print(b_l2, weights_l2_l3)
+
 
