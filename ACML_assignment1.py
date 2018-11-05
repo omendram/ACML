@@ -28,7 +28,7 @@ for x in range(8):
 first_layer = []
 hidden_layer = []
 output_layer = []
-learning_rate = 0.7
+learning_rate = 0.95
 lambda_value = 0.0002
 weights_l1_l2 = []
 weights_l2_l3 = []
@@ -123,7 +123,7 @@ def gradient_descent(input, W1, W2, b1, b2):
     while(correct_count != len(input)):
             count = count + 1
             correct_count = 0
-            W1, W2, b1, b2 = update_parameters(input, W1, W2, b1, b2)
+            W1, W2, b1, b2 = update_parameters(input[0:8], W1, W2, b1, b2)
             for i in input:
                             o, h = feedforward(i, W1, W2, b1, b2)
                             if i.index(max(i)) == o.index(max(o)):
